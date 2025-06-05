@@ -22,8 +22,9 @@ const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
           {props.required && <span className="text-red-500 ml-1">*</span>}
         </label>
         
-        {/* Input com ícone */}
+        {/* Input container */}
         <div className="relative">
+          {/* Icon */}
           {icon && (
             <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
               <div className="h-5 w-5 text-gray-400">
@@ -32,6 +33,7 @@ const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
             </div>
           )}
           
+          {/* Input field */}
           <input
             id={inputId}
             ref={ref}
@@ -44,11 +46,15 @@ const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
                 ? 'border-red-500 focus:ring-red-500 focus:border-red-500' 
                 : 'border-gray-300'
               }
-              ${props.disabled ? 'bg-gray-50 text-gray-500' : ''}
+              ${props.disabled ? 'bg-gray-50 text-gray-500 cursor-not-allowed' : 'bg-white'}
               ${className}
             `}
             aria-invalid={!!error}
-            aria-describedby={error ? `${inputId}-error` : helperText ? `${inputId}-help` : undefined}
+            aria-describedby={
+              error ? `${inputId}-error` : 
+              helperText ? `${inputId}-help` : 
+              undefined
+            }
             {...props}
           />
         </div>
@@ -74,3 +80,4 @@ const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
 FormInput.displayName = 'FormInput';
 
 export { FormInput };
+export default FormInput;

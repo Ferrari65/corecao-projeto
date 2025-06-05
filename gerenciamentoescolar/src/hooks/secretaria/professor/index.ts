@@ -1,5 +1,5 @@
-// src/hooks/secretaria/professor/index.ts - HOOKS DE PROFESSOR UNIFICADOS
-import { useState, useContext, useCallback, useMemo } from 'react';
+// src/hooks/secretaria/professor/index.ts - HOOKS DE PROFESSOR CORRIGIDOS
+import { useState, useContext, useCallback, useMemo, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AuthContext } from '@/contexts/AuthContext';
@@ -110,7 +110,7 @@ export const useProfessorAPI = (): UseProfessorAPIReturn => {
     }
   }, []);
 
-  // UPDATE (futuro)
+  // UPDATE
   const updateProfessor = useCallback(async (id: string, data: Partial<ProfessorDTO>): Promise<Professor> => {
     setLoading(true);
     setError(null);
@@ -134,7 +134,7 @@ export const useProfessorAPI = (): UseProfessorAPIReturn => {
     }
   }, []);
 
-  // DELETE (futuro)
+  // DELETE
   const deleteProfessor = useCallback(async (id: string, secretariaId: string): Promise<void> => {
     setLoading(true);
     setError(null);
@@ -249,7 +249,7 @@ export const useProfessorForm = ({
   };
 };
 
-// ===== 3. HOOK DE LISTA (para futuras listagens) =====
+// ===== 3. HOOK DE LISTA - CORRIGIDO =====
 interface UseProfessorListOptions {
   autoFetch?: boolean;
   secretariaId?: string;
@@ -293,12 +293,12 @@ export const useProfessorList = ({
 
   const clearError = useCallback(() => setError(null), []);
 
-  // Auto fetch se habilitado
-  useState(() => {
+  // ✅ CORRIGIDO: useEffect em vez de useState
+  useEffect(() => {
     if (autoFetch && currentSecretariaId) {
       loadProfessores();
     }
-  });
+  }, [autoFetch, currentSecretariaId, loadProfessores]);
 
   return useMemo(() => ({
     professores,
